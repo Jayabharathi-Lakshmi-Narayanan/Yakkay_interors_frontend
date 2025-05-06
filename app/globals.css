@@ -1,0 +1,144 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Playfair+Display:wght@400;500;600;700&display=swap');
+
+:root {
+  --foreground-rgb: 0, 0, 0;
+  --background-start-rgb: 255, 255, 255;
+  --background-end-rgb: 255, 255, 255;
+  
+  /* Gold and Ruby Green Theme */
+  --gold-500: 255, 195, 0;
+  --ruby-green-500: 0, 150, 95;
+
+  --background: 0 0% 100%;
+  --foreground: 0 0% 3.9%;
+  --card: 0 0% 100%;
+  --card-foreground: 0 0% 3.9%;
+  --popover: 0 0% 100%;
+  --popover-foreground: 0 0% 3.9%;
+  --primary: 46 100% 50%;
+  --primary-foreground: 0 0% 98%;
+  --secondary: 161 100% 29%;
+  --secondary-foreground: 0 0% 98%;
+  --muted: 0 0% 96.1%;
+  --muted-foreground: 0 0% 45.1%;
+  --accent: 46 100% 50%;
+  --accent-foreground: 0 0% 9%;
+  --destructive: 0 84.2% 60.2%;
+  --destructive-foreground: 0 0% 98%;
+  --border: 46 100% 80%;
+  --input: 0 0% 89.8%;
+  --ring: 46 100% 50%;
+  --radius: 0.5rem;
+}
+
+.dark {
+  --background: 0 0% 3.9%;
+  --foreground: 0 0% 98%;
+  --card: 0 0% 3.9%;
+  --card-foreground: 0 0% 98%;
+  --popover: 0 0% 3.9%;
+  --popover-foreground: 0 0% 98%;
+  --primary: 46 100% 50%;
+  --primary-foreground: 0 0% 9%;
+  --secondary: 161 100% 29%;
+  --secondary-foreground: 0 0% 98%;
+  --muted: 0 0% 14.9%;
+  --muted-foreground: 0 0% 63.9%;
+  --accent: 46 100% 50%;
+  --accent-foreground: 0 0% 98%;
+  --destructive: 0 62.8% 30.6%;
+  --destructive-foreground: 0 0% 98%;
+  --border: 46 100% 40%;
+  --input: 0 0% 14.9%;
+  --ring: 46 100% 50%;
+}
+
+@layer base {
+  * {
+    @apply border-border;
+  }
+  body {
+    @apply bg-background text-foreground font-sans;
+  }
+  h1, h2, h3, h4, h5, h6 {
+    @apply font-serif;
+  }
+}
+
+@layer components {
+  .gold-gradient {
+    background: linear-gradient(135deg, #FFF3CC, #FFC300, #CC9C00);
+  }
+  
+  .gold-text {
+    background: linear-gradient(to right, #FFC300, #CC9C00);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    color: transparent;
+  }
+  
+  .section-padding {
+    @apply py-16 md:py-24;
+  }
+  
+  .container-custom {
+    @apply px-4 md:px-8 lg:px-16 max-w-7xl mx-auto;
+  }
+  
+  .gold-button {
+    @apply bg-gold-500 text-white px-6 py-3 rounded-md hover:bg-gold-600 transition-all font-medium tracking-wide;
+  }
+  
+  .green-button {
+    @apply bg-ruby-green-500 text-white px-6 py-3 rounded-md hover:bg-ruby-green-600 transition-all font-medium tracking-wide;
+  }
+
+  .nav-link {
+    @apply relative text-base font-medium transition-colors hover:text-gold-500 focus:text-gold-500;
+  }
+
+  .nav-link::after {
+    @apply content-[""] absolute left-0 bottom-0 w-0 h-0.5 bg-gold-500 transition-all duration-300;
+  }
+
+  .nav-link:hover::after {
+    @apply w-full;
+  }
+
+  .card-hover {
+    @apply transition-all duration-300 hover:shadow-lg hover:-translate-y-1;
+  }
+
+  .gold-border {
+    @apply border-gold-300;
+  }
+}
+
+/* Custom cursor styles */
+html {
+  cursor: pointer;
+  scroll-behavior: smooth;
+}
+
+/* Scrollbar customization */
+::-webkit-scrollbar {
+  width: 8px;
+}
+
+::-webkit-scrollbar-track {
+  background: #f1f1f1;
+}
+
+::-webkit-scrollbar-thumb {
+  background: #FFC300;
+  border-radius: 4px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: #CC9C00;
+}
