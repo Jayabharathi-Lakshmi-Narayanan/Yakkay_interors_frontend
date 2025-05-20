@@ -2,7 +2,6 @@
 
 import { useState, useEffect } from "react";
 import Link from "next/link";
-import Image from "next/image";
 import { Menu, X } from "lucide-react";
 import { cn } from "@/lib/utils";
 
@@ -49,29 +48,28 @@ const Navbar = () => {
     >
       <div className="container-custom flex justify-between items-center">
         <Link href="/" className="flex items-center">
-          <span className="text-4xl font-serif font-bold text-yellow-500 hover:text-yellow-500 transition duration-300">
+          <span className="text-4xl font-serif font-bold text-yellow-500 transition duration-300">
             YAKKAY
           </span>
-          <span className="text-4xl font-serif ml-2 font-bold text-yellow-500 hover:text-yellow-500 transition duration-300">
+          <span className="text-4xl font-serif ml-2 font-bold text-yellow-500 transition duration-300">
             INTERIORS
           </span>
         </Link>
 
+        {/* Desktop Navigation */}
         <nav className="hidden md:flex space-x-8">
           {navLinks.map((link) => (
             <Link
               key={link.name}
               href={link.href}
-              className="nav-link text-black text-shadow-md transition-all duration-300 hover:text-yellow-500 hover:text-shadow-md"
-              style={{
-                textShadow: "2px 2px 4px rgba(255, 255, 0, 0.7)", // Yellow shadow for links
-              }}
+              className="nav-link text-black text-shadow-md transition-all duration-300"
             >
               {link.name}
             </Link>
           ))}
         </nav>
 
+        {/* Mobile Menu Button */}
         <button
           className="md:hidden text-gray-800 z-50"
           onClick={toggleMenu}
@@ -103,9 +101,6 @@ const Navbar = () => {
                 href={link.href}
                 className="text-xl font-medium text-black"
                 onClick={toggleMenu}
-                style={{
-                  textShadow: "2px 2px 4px rgba(255, 255, 0, 0.7)", // Yellow shadow for mobile links
-                }}
               >
                 {link.name}
               </Link>

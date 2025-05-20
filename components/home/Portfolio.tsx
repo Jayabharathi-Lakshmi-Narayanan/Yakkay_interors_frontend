@@ -30,7 +30,10 @@ const Portfolio = () => {
   };
 
   return (
-    <section id="portfolio" className="section-padding bg-gray-50">
+    <section
+      id="portfolio"
+      className="section-padding lg:pt-8 lg:pb-8 bg-gray-50"
+    >
       <div className="container-custom">
         <div className="text-center max-w-3xl mx-auto mb-12">
           <h2 className="text-sm uppercase tracking-wider text-ruby-green-500 font-medium mb-3">
@@ -97,12 +100,12 @@ const Portfolio = () => {
         </div>
 
         <div className="text-center mt-12">
-          <Link
-            href="/project"
+          <a
+            href="#portfolio"
             className="inline-block px-8 py-3 border-2 border-gold-500 text-gold-500 font-medium rounded-md hover:bg-gold-500 hover:text-white transition-colors"
           >
             View All Projects
-          </Link>
+          </a>
         </div>
       </div>
     </section>

@@ -67,7 +67,7 @@ const ContactForm = () => {
   };
 
   return (
-    <section id="contact" className="section-padding bg-white">
+    <section id="contact" className="section-padding lg:pt-8 lg:pb-8 bg-white">
       <div className="container-custom">
         <div className="text-center max-w-3xl mx-auto mb-16">
           <h2 className="text-sm uppercase tracking-wider text-ruby-green-500 font-medium mb-3">
@@ -105,19 +105,6 @@ const ContactForm = () => {
                     </p>
                   </div>
                 </div>
-
-                <div className="flex items-start">
-                  <MapPin className="text-gold-500 mr-4 mt-1" size={24} />
-                  <div>
-                    <h5 className="font-medium text-lg mb-1">USA Office</h5>
-                    <p className="text-gray-600">
-                      1334 Brittmoore Rd,
-                      <br />
-                      Houston, Texas, 77494
-                    </p>
-                  </div>
-                </div>
-
                 <div className="flex items-center">
                   <Phone className="text-gold-500 mr-4" size={24} />
                   <div>
@@ -162,8 +149,9 @@ const ContactForm = () => {
                 Send Us a Message
               </h4>
 
+              {/* Success and Error Feedback */}
               {formState.submitStatus === "success" && (
-                <div className="bg-green-50 border border-green-200 text-green-700 p-4 rounded-md mb-6">
+                <div className="bg-yellow-50 border border-yellow-200 text-yellow-700 p-4 rounded-md mb-6">
                   Thank you for your message! We&#39;ll get back to you soon.
                 </div>
               )}
