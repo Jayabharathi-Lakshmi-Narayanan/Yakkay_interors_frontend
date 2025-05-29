@@ -1,12 +1,11 @@
 "use client";
 
-import { notFound } from "next/navigation";
-import { services } from "@/lib/data/services";
-import type { Service } from "@/lib/data/services";
+import { useState } from "react";
 import Image from "next/image";
-import Link from "next/link";
+import Modal from "@/components/ui/Modal";
+import QuoteForm from "@/components/Quoteform/Quoteform";
+import { services } from "@/lib/data/services";
 
-// Reusable heading with highlighted last word
 function HeadingWithHighlight({
   text,
   className = "",
@@ -23,16 +22,19 @@ function HeadingWithHighlight({
   );
 }
 
-export function generateStaticParams() {
-  return services.map((service) => ({
-    id: service.id,
-  }));
-}
+const styleOptions = [
+  "Italian Style",
+  "Roman Style",
+  "Asian Style",
+  "Indian Style",
+  "Spanish Style",
+  "American Style",
+  "Royal Style",
+  "Contemporary Style",
+];
 
-export default function ServicePage({ params }: { params: { id: string } }) {
-  const service = services.find((s) => s.id === params.id);
-
-  if (!service) return notFound();
+export default function ClientServicePage({ service }: { service: any }) {
+  const [isModalOpen, setIsModalOpen] = useState(false);
 
   return (
     <div className="container-custom pt-24 pb-16 space-y-12">
@@ -56,7 +58,7 @@ export default function ServicePage({ params }: { params: { id: string } }) {
 
       {/* Images */}
       <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-        {service.images.map((img, index) => (
+        {service.images.map((img: string, index: number) => (
           <div
             key={index}
             className="relative h-64 w-full rounded-lg overflow-hidden"
@@ -79,7 +81,7 @@ export default function ServicePage({ params }: { params: { id: string } }) {
             className="text-xl font-semibold mb-4"
           />
           <ul className="list-disc list-inside space-y-2">
-            {service.highlights.map((highlight, idx) => (
+            {service.highlights.map((highlight: string, idx: number) => (
               <li key={idx}>{highlight}</li>
             ))}
           </ul>
@@ -89,7 +91,7 @@ export default function ServicePage({ params }: { params: { id: string } }) {
       {/* Stats */}
       {service.stats && (
         <div className="grid grid-cols-2 md:grid-cols-4 gap-4 text-center">
-          {service.stats.map((stat, idx) => (
+          {service.stats.map((stat: any, idx: number) => (
             <div key={idx} className="bg-white shadow p-4 rounded-lg">
               <div className="text-2xl font-bold text-yellow-500">
                 {stat.value}
@@ -107,16 +109,17 @@ export default function ServicePage({ params }: { params: { id: string } }) {
             text="Style Inspirations"
             className="text-2xl font-semibold mb-4"
           />
-          <div className="grid md:grid-cols-3 gap-6">
-            {service.styleExamples.map((style, idx) => (
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+            {service.styleExamples.map((style: any, idx: number) => (
               <div key={idx} className="bg-white p-4 rounded shadow">
-                <Image
-                  src={style.image}
-                  alt={style.title}
-                  width={400}
-                  height={300}
-                  className="rounded-lg object-cover mb-2"
-                />
+                <div className="relative aspect-square w-full rounded-lg overflow-hidden mb-2">
+                  <Image
+                    src={style.image}
+                    alt={style.title}
+                    fill
+                    className="object-cover"
+                  />
+                </div>
                 <h3 className="font-semibold text-lg">{style.title}</h3>
                 <p className="text-sm text-gray-600">{style.description}</p>
               </div>
@@ -133,7 +136,7 @@ export default function ServicePage({ params }: { params: { id: string } }) {
             className="text-xl font-semibold mb-2"
           />
           <ul className="list-disc list-inside space-y-2">
-            {service.offerings.map((item, idx) => (
+            {service.offerings.map((item: string, idx: number) => (
               <li key={idx}>{item}</li>
             ))}
           </ul>
@@ -148,7 +151,7 @@ export default function ServicePage({ params }: { params: { id: string } }) {
             className="text-xl font-semibold mb-2"
           />
           <ul className="space-y-2">
-            {service.techFeatures.map((tech, idx) => (
+            {service.techFeatures.map((tech: any, idx: number) => (
               <li key={idx}>
                 <strong>{tech.title}: </strong>
                 {tech.description}
@@ -166,7 +169,7 @@ export default function ServicePage({ params }: { params: { id: string } }) {
             className="text-xl font-semibold mb-2"
           />
           <ul className="list-disc list-inside space-y-2">
-            {service.warranties.map((warranty, idx) => (
+            {service.warranties.map((warranty: string, idx: number) => (
               <li key={idx}>{warranty}</li>
             ))}
           </ul>
@@ -181,7 +184,7 @@ export default function ServicePage({ params }: { params: { id: string } }) {
             className="text-xl font-semibold mb-2"
           />
           <ul className="list-disc list-inside space-y-2">
-            {service.priceBenefits.map((benefit, idx) => (
+            {service.priceBenefits.map((benefit: string, idx: number) => (
               <li key={idx}>{benefit}</li>
             ))}
           </ul>
@@ -189,14 +192,28 @@ export default function ServicePage({ params }: { params: { id: string } }) {
       )}
 
       {/* CTA Button */}
-      <div className="text-center mt-12">
-        <Link
-          href={`/getQuoteform/${service.id}`}
+      <div className="text-center mt-10">
+        <button
+          onClick={() => setIsModalOpen(true)}
           className="inline-block bg-black text-white px-6 py-3 rounded-full hover:bg-gray-800 transition"
         >
           Get Started Today
-        </Link>
+        </button>
       </div>
+
+      {/* Modal Popup */}
+      {isModalOpen && (
+        <Modal onClose={() => setIsModalOpen(false)}>
+          <h2 className="text-center text-2xl font-bold mb-6">
+            Get <span className="text-yellow-500">Quote</span>
+          </h2>
+          <QuoteForm
+            projectId={service.numericId.toString()}
+            allServices={services}
+            styleOptions={styleOptions}
+          />
+        </Modal>
+      )}
     </div>
   );
 }

@@ -1,7 +1,6 @@
-// lib/data/services.ts
-
 export type Service = {
-  id: string; // used for routing: /services/[id]
+  id: string; // slug for routing
+  numericId: number; // numeric ID for backend or quote form
   title: string;
   description: string;
   longDescription: string;
@@ -29,6 +28,7 @@ export type Service = {
 export const services: Service[] = [
   {
     id: "residential-interiors",
+    numericId: 1,
     title: "Residential Interiors",
     description: "Transform your home into a stylish, functional space.",
     longDescription:
@@ -109,6 +109,7 @@ export const services: Service[] = [
   },
   {
     id: "commercial-spaces",
+    numericId: 2,
     title: "Commercial Spaces",
     description: "Create inspiring workplaces that enhance productivity.",
     longDescription:
@@ -156,184 +157,68 @@ export const services: Service[] = [
   },
   {
     id: "space-planning",
+    numericId: 3,
     title: "Space Planning",
-    description: "Optimize your layout for functionality and flow.",
+    description: "Optimize your space layout for maximum functionality.",
     longDescription:
-      "We offer intelligent space planning services to maximize the potential of your environment. By analyzing movement patterns, purpose, and aesthetics, we design layouts that make every square foot work harder.",
-    images: [
-      "/Contemporary Appartment/6.jpeg",
-      "/Contemporary Appartment/7.jpeg",
-    ],
-    highlights: [
-      "Tailored layouts",
-      "User-centric flow",
-      "Optimal space utility",
-    ],
+      "Our space planning services ensure that every inch of your space is used effectively, combining aesthetics with function to create balanced, comfortable environments.",
+    images: ["/images/space-planning1.jpg", "/images/space-planning2.jpg"],
+    highlights: ["Efficient layouts", "Maximized flow", "Customized solutions"],
     stats: [
-      { label: "Projects optimized", value: "3000+" },
-      { label: "Years experience", value: "10+" },
+      { label: "Projects handled", value: "5000+" },
+      { label: "Satisfied clients", value: "3000+" },
     ],
     offerings: [
-      "Zoning and circulation",
+      "Zoning and partitioning",
       "Furniture arrangement",
-      "Workflow optimization",
-      "Layout drawing and modeling",
+      "Traffic flow optimization",
     ],
+    warranties: ["1-year design review warranty"],
     techFeatures: [
       {
-        title: "3D Visualization",
-        description:
-          "Preview space usage before execution with precise modeling.",
-      },
-      {
-        title: "AI-Driven Planning",
-        description: "Smart analytics to recommend the most efficient layouts.",
+        title: "3D Modeling",
+        description: "Visualize your space before implementation.",
       },
     ],
-    priceBenefits: [
-      "Detailed floor plans",
-      "Modular layout packages",
-      "Transparent quotes",
-    ],
+    priceBenefits: ["Affordable consultation fees"],
   },
   {
     id: "color-consultation",
+    numericId: 4,
     title: "Color Consultation",
-    description: "Choose the right palette to enhance your space.",
+    description: "Select the perfect color palette for your space.",
     longDescription:
-      "Our color experts help you pick hues that create the right ambiance, elevate mood, and match your furnishings. Whether bold or serene, we ensure your color scheme feels just right.",
-    images: [
-      "/Contemporary Appartment/8.jpeg",
-      "/Contemporary Appartment/1.jpeg",
-    ],
-    highlights: [
-      "Mood-enhancing palettes",
-      "Theme consistency",
-      "Expert-backed choices",
-    ],
-    stats: [
-      { label: "Color schemes created", value: "5000+" },
-      { label: "Palette libraries", value: "100+" },
-    ],
-    offerings: [
-      "Interior and exterior color selection",
-      "Accent wall strategies",
-      "Material-palette coordination",
-      "Custom swatch samples",
-    ],
-    warranties: [
-      "1-year service assistance",
-      "Touch-up recommendations included",
-    ],
-    techFeatures: [
-      {
-        title: "Digital Palette Previews",
-        description:
-          "Visualize your palette on real room images before you commit.",
-      },
-      {
-        title: "Mood-Based Suggestions",
-        description:
-          "AI-curated hues to suit emotions, lighting, and room function.",
-      },
-    ],
-    priceBenefits: [
-      "Budget-based color planning",
-      "Flexible service packages",
-      "No-cost revisions (up to 2)",
-    ],
+      "Our experts help you choose colors that set the right mood and complement your style, ensuring harmony and balance in your interiors.",
+    images: ["/images/color1.jpg", "/images/color2.jpg"],
+    highlights: ["Expert color advice", "Personalized palettes"],
+    offerings: ["Color selection", "Palette matching", "Sample testing"],
+    warranties: ["Satisfaction guaranteed"],
+    priceBenefits: ["Competitive pricing"],
   },
   {
     id: "furniture-selection",
+    numericId: 5,
     title: "Furniture Selection",
-    description: "Find furniture that balances style and comfort.",
+    description: "Find the perfect furniture balancing style and comfort.",
     longDescription:
-      "We guide you in selecting the ideal furniture pieces that complement your interior, meet your needs, and reflect your taste. From custom designs to curated collections, we handle it all.",
-    images: [
-      "/Contemporary Appartment/2.jpeg",
-      "/Contemporary Appartment/3.jpeg",
-    ],
-    highlights: [
-      "Comfort meets elegance",
-      "Tailored to theme",
-      "Durability assured",
-    ],
-    stats: [
-      { label: "Furniture items delivered", value: "7000+" },
-      { label: "Supplier network", value: "150+" },
-    ],
-    offerings: [
-      "Custom-built furniture",
-      "Sofa and lounge curation",
-      "Bedroom and dining setups",
-      "Space-saving modular options",
-    ],
-    warranties: [
-      "Up to 5-year structural warranty",
-      "2-year upholstery service coverage",
-    ],
-    techFeatures: [
-      {
-        title: "Ergonomic Mapping",
-        description: "Furniture designed for comfort, posture, and health.",
-      },
-      {
-        title: "Virtual Room Staging",
-        description:
-          "Test furniture in virtual mockups of your space before ordering.",
-      },
-    ],
-    priceBenefits: [
-      "Bulk furniture discounts",
-      "Combo set savings",
-      "Flexible delivery and assembly packages",
-    ],
+      "We assist in choosing furniture pieces that complement your design, ensuring comfort without compromising aesthetics.",
+    images: ["/images/furniture1.jpg", "/images/furniture2.jpg"],
+    highlights: ["Curated furniture", "Ergonomic choices"],
+    offerings: ["Furniture sourcing", "Custom orders", "Styling advice"],
+    warranties: ["Manufacturer warranties applicable"],
+    priceBenefits: ["Bulk order discounts"],
   },
   {
     id: "design-consultation",
+    numericId: 6,
     title: "Design Consultation",
-    description: "Expert guidance for your interior design journey.",
+    description: "Expert advice to guide your design decisions.",
     longDescription:
-      "Have questions or need direction? Our design consultations provide personalized advice on themes, layouts, materials, and execution, helping you make confident decisions.",
-    images: [
-      "/Contemporary Appartment/4.jpeg",
-      "/Contemporary Appartment/5.jpeg",
-    ],
-    highlights: [
-      "Expert-led advice",
-      "Theme and layout clarity",
-      "Custom material suggestions",
-    ],
-    stats: [
-      { label: "Clients consulted", value: "12000+" },
-      { label: "Average consult time", value: "45 mins" },
-    ],
-    offerings: [
-      "Moodboard creation",
-      "Material and fixture suggestions",
-      "Color and theme alignment",
-      "Feasibility and budgeting advice",
-    ],
-    warranties: [
-      "Follow-up support for 1 month",
-      "One-time plan revision included",
-    ],
-    techFeatures: [
-      {
-        title: "Live Design Sessions",
-        description:
-          "One-on-one video consults with screen share and annotation.",
-      },
-      {
-        title: "Design Intelligence Engine",
-        description:
-          "Automated suggestions based on budget, layout, and preferences.",
-      },
-    ],
-    priceBenefits: [
-      "Free first consultation",
-      "Discounts on bundled services",
-      "No-obligation expert calls",
-    ],
+      "Get professional insights and recommendations to ensure your design vision becomes a reality with flawless execution.",
+    images: ["/images/design1.jpg", "/images/design2.jpg"],
+    highlights: ["Experienced designers", "Personalized plans"],
+    offerings: ["Concept development", "Budget planning", "Project management"],
+    warranties: ["Consultation satisfaction guarantee"],
+    priceBenefits: ["Flexible pricing packages"],
   },
 ];

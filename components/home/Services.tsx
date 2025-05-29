@@ -6,31 +6,56 @@ import {
   Palette,
   Sofa,
 } from "lucide-react";
-import { services } from "@/lib/data/services"; // Import the services data
+import Link from "next/link";
 
 const Services = () => {
-  // Define the mapping between the icons and the services dynamically
-  const getIconForService = (serviceId: string) => {
-    switch (serviceId) {
-      case "residential-interiors":
-        return <Home className="h-10 w-10 text-ruby-green-500" />;
-      case "commercial-spaces":
-        return <Building2 className="h-10 w-10 text-ruby-green-500" />;
-      case "space-planning":
-        return <LayoutGrid className="h-10 w-10 text-ruby-green-500" />;
-      case "color-consultation":
-        return <Palette className="h-10 w-10 text-ruby-green-500" />;
-      case "furniture-selection":
-        return <Sofa className="h-10 w-10 text-ruby-green-500" />;
-      case "design-consultation":
-        return <Users2 className="h-10 w-10 text-ruby-green-500" />;
-      default:
-        return null;
-    }
-  };
+  const services = [
+    {
+      icon: <Home className="h-10 w-10 text-ruby-green-500" />,
+      title: "Residential Interiors",
+      description:
+        "Transform your home into a stylish, functional space that reflects your personal taste and lifestyle.",
+      link: "/services/residential-interiors",
+    },
+    {
+      icon: <Building2 className="h-10 w-10 text-ruby-green-500" />,
+      title: "Commercial Spaces",
+      description:
+        "Create inspiring workplaces that enhance productivity, impress clients, and reflect your brand identity.",
+      link: "/services/commercial-spaces",
+    },
+    {
+      icon: <LayoutGrid className="h-10 w-10 text-ruby-green-500" />,
+      title: "Space Planning",
+      description:
+        "Optimize your space layout for maximum functionality, flow, and aesthetic appeal.",
+      link: "/services/space-planning",
+    },
+    {
+      icon: <Palette className="h-10 w-10 text-ruby-green-500" />,
+      title: "Color Consultation",
+      description:
+        "Select the perfect color palette that sets the right mood and complements your space.",
+      link: "/services/color-consultation",
+    },
+    {
+      icon: <Sofa className="h-10 w-10 text-ruby-green-500" />,
+      title: "Furniture Selection",
+      description:
+        "Find the perfect furniture pieces that balance style, comfort, and functionality.",
+      link: "/services/furniture-selection",
+    },
+    {
+      icon: <Users2 className="h-10 w-10 text-ruby-green-500" />,
+      title: "Design Consultation",
+      description:
+        "Get expert advice and guidance to make informed decisions about your space design.",
+      link: "/services/design-consultation",
+    },
+  ];
 
   return (
-    <section id="services" className="section-padding lg:pt-8 lg:pb-8">
+    <section id="services" className="section-padding">
       <div className="container-custom">
         <div className="text-center max-w-3xl mx-auto mb-16">
           <h2 className="text-sm uppercase tracking-wider text-ruby-green-500 font-medium mb-3">
@@ -49,21 +74,21 @@ const Services = () => {
 
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
           {services.map((service) => (
-            <div
-              key={service.id}
+            <article
+              key={service.title}
               className="bg-white p-8 rounded-lg border border-gray-100 shadow-sm card-hover group"
             >
               <div className="mb-6 bg-gray-50 rounded-full p-4 w-fit group-hover:bg-gold-50 transition-colors">
-                {getIconForService(service.id)}{" "}
-                {/* Render the icon dynamically */}
+                {service.icon}
               </div>
               <h4 className="text-xl font-serif font-semibold mb-3 group-hover:text-gold-500 transition-colors">
                 {service.title}
               </h4>
               <p className="text-gray-600 mb-4">{service.description}</p>
-              <a
-                href={`/services/${service.id}`} // Dynamically link to the specific service page
+              <Link
+                href={service.link}
                 className="text-ruby-green-500 font-medium hover:text-gold-500 transition-colors flex items-center"
+                aria-label={`Learn more about ${service.title}`}
               >
                 Learn More
                 <svg
@@ -80,8 +105,8 @@ const Services = () => {
                     d="M9 5l7 7-7 7"
                   />
                 </svg>
-              </a>
-            </div>
+              </Link>
+            </article>
           ))}
         </div>
       </div>

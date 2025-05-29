@@ -4,10 +4,12 @@ import { useState, useEffect } from "react";
 import Link from "next/link";
 import { Menu, X } from "lucide-react";
 import { cn } from "@/lib/utils";
+import { useRouter } from "next/navigation";
 
 const Navbar = () => {
   const [isOpen, setIsOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
+  const router = useRouter();
 
   useEffect(() => {
     const handleScroll = () => {
@@ -25,8 +27,23 @@ const Navbar = () => {
     };
   }, []);
 
-  const toggleMenu = () => {
+  const toggleMenu = (e: any, href: string) => {
+    e.preventDefault();
     setIsOpen(!isOpen);
+    if (href.startsWith("#")) {
+      router.push(`/${href}`);
+    } else if (href) {
+      router.push(href);
+    }
+  };
+
+  const handleNavClick = (e: any, href: string) => {
+    e.preventDefault();
+    if (href.startsWith("#")) {
+      router.push(`/${href}`);
+    } else if (href) {
+      router.push(href);
+    }
   };
 
   const navLinks = [
@@ -51,7 +68,7 @@ const Navbar = () => {
           <span className="text-4xl font-serif font-bold text-yellow-500 transition duration-300">
             YAKKAY
           </span>
-          <span className="text-4xl font-serif ml-2 font-bold text-yellow-500 transition duration-300">
+          <span className="text-4xl font-serif ml-2 font-bold text-ruby-green-500 transition duration-300">
             INTERIORS
           </span>
         </Link>
@@ -62,6 +79,7 @@ const Navbar = () => {
             <Link
               key={link.name}
               href={link.href}
+              onClick={(e) => handleNavClick(e, link.href)}
               className="nav-link text-black text-shadow-md transition-all duration-300"
             >
               {link.name}
@@ -72,7 +90,7 @@ const Navbar = () => {
         {/* Mobile Menu Button */}
         <button
           className="md:hidden text-gray-800 z-50"
-          onClick={toggleMenu}
+          onClick={(e) => toggleMenu(e, "")}
           aria-label="Toggle menu"
         >
           {isOpen ? <X size={24} /> : <Menu size={24} />}
@@ -87,7 +105,7 @@ const Navbar = () => {
           <div className="flex justify-end">
             <button
               className="text-gray-800"
-              onClick={toggleMenu}
+              onClick={(e) => toggleMenu(e, "")}
               aria-label="Close menu"
             >
               <X size={24} />
@@ -100,7 +118,7 @@ const Navbar = () => {
                 key={link.name}
                 href={link.href}
                 className="text-xl font-medium text-black"
-                onClick={toggleMenu}
+                onClick={(e) => toggleMenu(e, link.href)}
               >
                 {link.name}
               </Link>

@@ -1,8 +1,18 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useState, useEffect } from "react";
 
-export default function QuoteForm({ projectId }: { projectId: string }) {
+interface QuoteFormProps {
+  projectId: string;
+  allServices: { id: string; numericId: number; title: string }[];
+  styleOptions: string[];
+}
+
+export default function QuoteForm({
+  projectId,
+  allServices,
+  styleOptions,
+}: QuoteFormProps) {
   const [formData, setFormData] = useState({
     name: "",
     mobile: "",
@@ -10,7 +20,7 @@ export default function QuoteForm({ projectId }: { projectId: string }) {
     location: "",
     area: "",
     style: "",
-    service: "",
+    service: projectId, // preselect using projectId
   });
 
   const [feedback, setFeedback] = useState<string | null>(null);
@@ -18,10 +28,7 @@ export default function QuoteForm({ projectId }: { projectId: string }) {
   const handleChange = (
     e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>
   ) => {
-    setFormData({
-      ...formData,
-      [e.target.name]: e.target.value,
-    });
+    setFormData({ ...formData, [e.target.name]: e.target.value });
   };
 
   const handleSubmit = async (e: React.FormEvent) => {
@@ -61,18 +68,17 @@ export default function QuoteForm({ projectId }: { projectId: string }) {
           location: "",
           area: "",
           style: "",
-          service: "",
+          service: projectId,
         });
       } else {
         const data = await response.json();
-        setFeedback(data.message || "Submission failed. Please try again.");
+        setFeedback(data.message || "Submission failed.");
       }
     } catch (error) {
-      setFeedback("Something went wrong. Please try again later.");
+      setFeedback("Something went wrong.");
     }
   };
 
-  // Auto-hide feedback after 4 seconds
   useEffect(() => {
     if (feedback) {
       const timer = setTimeout(() => setFeedback(null), 4000);
@@ -81,96 +87,108 @@ export default function QuoteForm({ projectId }: { projectId: string }) {
   }, [feedback]);
 
   return (
-    <div className="p-6 bg-white text-black rounded-xl shadow-lg flex flex-col justify-start pb-4">
-      <form className="space-y-4" onSubmit={handleSubmit}>
-        <input
-          type="text"
-          name="name"
-          placeholder="Name"
-          value={formData.name}
-          onChange={handleChange}
-          className="w-full border p-2 rounded focus:outline-none focus:ring-2 focus:ring-yellow-500"
-        />
-        <input
-          type="tel"
-          name="mobile"
-          placeholder="Phone Number"
-          value={formData.mobile}
-          onChange={handleChange}
-          className="w-full border p-2 rounded focus:outline-none focus:ring-2 focus:ring-yellow-500"
-        />
-        <input
-          type="email"
-          name="email"
-          placeholder="Email ID"
-          value={formData.email}
-          onChange={handleChange}
-          className="w-full border p-2 rounded focus:outline-none focus:ring-2 focus:ring-yellow-500"
-        />
-        <input
-          type="text"
-          name="location"
-          placeholder="Location of the Site"
-          value={formData.location}
-          onChange={handleChange}
-          className="w-full border p-2 rounded focus:outline-none focus:ring-2 focus:ring-yellow-500"
-        />
-        <input
-          type="text"
-          name="area"
-          placeholder="Total Built Area (sqft)"
-          value={formData.area}
-          onChange={handleChange}
-          className="w-full border p-2 rounded focus:outline-none focus:ring-2 focus:ring-yellow-500"
-        />
-        <select
-          name="style"
-          value={formData.style}
-          onChange={handleChange}
-          className="w-full border p-2 rounded focus:outline-none focus:ring-2 focus:ring-yellow-500"
-        >
-          <option value="">Select Style</option>
-          <option>Italian Style</option>
-          <option>Spanish Style</option>
-          <option>South Indian Style</option>
-          <option>North Indian Style</option>
-          <option>Chettinad Style</option>
-          <option>Chinese Style</option>
-          <option>Royal Style</option>
-          <option>Contemporary Style</option>
-          <option>Others</option>
-        </select>
+    <form onSubmit={handleSubmit} className="space-y-4">
+      <input
+        type="text"
+        name="name"
+        value={formData.name}
+        onChange={handleChange}
+        placeholder="Name"
+        className="w-full border p-2 rounded"
+        required
+      />
+      <input
+        type="text"
+        name="mobile"
+        value={formData.mobile}
+        onChange={handleChange}
+        placeholder="Mobile"
+        className="w-full border p-2 rounded"
+        required
+      />
+      <input
+        type="email"
+        name="email"
+        value={formData.email}
+        onChange={handleChange}
+        placeholder="Email"
+        className="w-full border p-2 rounded"
+        required
+      />
+      <input
+        type="text"
+        name="location"
+        value={formData.location}
+        onChange={handleChange}
+        placeholder="Location"
+        className="w-full border p-2 rounded"
+        required
+      />
+      <input
+        type="text"
+        name="area"
+        value={formData.area}
+        onChange={handleChange}
+        placeholder="Area (sq.ft)"
+        className="w-full border p-2 rounded"
+        required
+      />
+
+      {/* Service Dropdown */}
+      <div>
+        <label className="block text-sm font-medium text-gray-700">
+          Select Service
+        </label>
         <select
           name="service"
           value={formData.service}
           onChange={handleChange}
-          className="w-full border p-2 rounded focus:outline-none focus:ring-2 focus:ring-yellow-500"
+          className="mt-1 block w-full border border-gray-300 rounded-md p-2"
+          required
         >
           <option value="">Select Service</option>
-          <option value="residential">Residential Design</option>
-          <option value="commercial">Commercial Design</option>
-          <option value="space-planning">Space Planning</option>
-          <option value="color-consultation">Color Consultation</option>
-          <option value="furniture-selection">Furniture Selection</option>
-          <option value="other">Other</option>
+          {allServices.map((service) => (
+            <option
+              key={service.numericId}
+              value={service.numericId.toString()}
+            >
+              {service.title}
+            </option>
+          ))}
         </select>
+      </div>
 
-        <div className="relative">
-          <button
-            type="submit"
-            className="w-full bg-yellow-500 text-white font-medium py-2 px-4 rounded hover:bg-yellow-600"
-          >
-            Get Quote
-          </button>
-          {feedback && (
-            <div className="fixed inset-0 flex items-center justify-center z-50">
-              <div className="bg-yellow-500 text-white text-center text-base py-3 px-6 rounded shadow-lg animate-fade-in">
-                {feedback}
-              </div>
-            </div>
-          )}
-        </div>
-      </form>
-    </div>
+      {/* Style Dropdown */}
+      <div>
+        <label className="block text-sm font-medium text-gray-700">
+          Preferred Style
+        </label>
+        <select
+          name="style"
+          value={formData.style}
+          onChange={handleChange}
+          className="mt-1 block w-full border border-gray-300 rounded-md p-2"
+          required
+        >
+          <option value="">Select Style</option>
+          {styleOptions.map((style, idx) => (
+            <option key={idx} value={style}>
+              {style}
+            </option>
+          ))}
+        </select>
+      </div>
+
+      {feedback && (
+        <p className="text-sm text-center text-blue-600">{feedback}</p>
+      )}
+
+      <button
+        type="submit"
+        className="w-full bg-black text-white py-2 rounded hover:bg-gray-800"
+      >
+        Submit Quote Request
+      </button>
+    </form>
   );
 }
